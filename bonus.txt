@@ -1,0 +1,4 @@
+1. Served button: added a served button to let Emeril know if an order has been served or not.
+                  If the served button is hit, the order will be marked as strikethrough.
+2. Scroll down for filling price: added a scroll down feature when filling price, user could 
+                                  choose to type in the number or to select from scroll down.

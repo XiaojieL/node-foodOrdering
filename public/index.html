@@ -1,0 +1,104 @@
+<!doctype html>
+
+<!-- ASSIGN OUR ANGULAR MODULE -->
+<html ng-app="gestoFoodOrder">
+<head>
+	<!-- META -->
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1"><!-- Optimize mobile viewport -->
+
+	<title>Emeril's Food Order System</title>
+
+	<!-- SCROLLS -->
+	<link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css"><!-- load bootstrap -->
+	<link rel="stylesheet" href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.min.css">
+	<style>
+		html 					{ overflow-y:scroll; }
+		body 					{ padding-top:80px; }
+		#food-list 				{ margin-bottom:60px; }
+		#food-form 	 			{ margin-bottom:60px; }
+	</style>
+
+	<!-- SPELLS -->
+	<script src="//ajax.googleapis.com/ajax/libs/angularjs/1.2.16/angular.min.js"></script><!-- load angular -->
+	<script src="js/controllers/main.js"></script> <!-- load up our controller -->
+	<script src="js/services/food.js"></script> <!-- load our todo service -->
+	<script src="js/core.js"></script> <!-- load our main application -->
+
+</head>
+<!-- SET THE CONTROLLER -->
+<body ng-controller="mainController">
+	<div class="container">
+
+		<!-- HEADER AND FOOD COUNT -->
+		<div class="jumbotron text-center">
+			<h1>Emeril's Ordering Page</h1>
+			<h2>Item Ordered <span class="label label-info">{{ orders.length }}</span></h2>
+			<h2>Total Price:  <span class="label label-info">$ {{total}}</span></h2>
+		</div>
+
+		<!-- TODO LIST -->
+		<div  id="food-list" class="row">
+			<div class="col-sm-4 col-sm-offset-4 text-center">
+
+				<!-- LOOP OVER THE TODOS IN $scope.food -->
+				<div ng-repeat="order in orders">
+					<label >
+						<!-- IF HIT DONE, WILL BE MARKED AS STRIKETHROUGH -->
+						<span ng-if="order.done"  layout-align="space-around center">
+							<del>
+							 {{ order.name }}
+							 {{ order.price }}
+							 {{ order.orderedBy }}
+							</del>
+						</span>
+						<span ng-if="!order.done"  layout-align="space-around center">
+						 {{ order.name }}
+						 {{ order.price }}
+						 {{ order.orderedBy }}
+						</span>
+
+						<button type="submit" class="btn btn-primary btn-sm" ng-click="deleteFood(order._id)"> Cancel </button>
+						<button type="submit" class="btn btn-primary btn-sm" ng-click="markAsDone(order._id)"> Served </button>
+					</label>
+				</div>
+
+				<p class="text-center" ng-show="loading">
+					<span class="fa fa-spinner fa-spin fa-3x"></span>
+				</p>
+
+			</div>
+		</div>
+
+		<!-- FORM TO CREATE TODOS -->
+		<div id="order-form" class="row" >
+			<div class="col-sm-4 col-sm-offset-4 text-center">
+				<form>
+					<div class="form-group">
+
+						<!-- BIND THIS VALUE TO formData.text IN ANGULAR -->
+						<input type="text" class="form-control input-lg text-center" placeholder="Food: Fried Chicken" ng-model="formData.name">
+						<input type="number" class="form-control input-lg text-center" placeholder="Price: 7.5" ng-model="formData.price">
+						<input type="text" class="form-control input-lg text-center" placeholder="Customer: Leah" ng-model="formData.orderedBy">
+					</div>
+
+					<!-- createToDo() WILL CREATE NEW TODOS -->
+					<button type="submit" class="btn btn-primary btn-lg" ng-click="createFood()">Order</button>
+				</form>
+			</div>
+		</div>
+		<div>
+		<p>
+
+		</p>
+		</div>
+
+		<div class="text-center text-muted">
+			<p>A sample page by <a href="https://www.linkedin.com/in/leahxl">Leah</a></p>
+			<p>In reference of <a href="http://scotch.io/tutorials/javascript/creating-a-single-page-todo-app-with-node-and-angular">this tutorial</a></p>
+		</div>
+
+	</div>
+
+</body>
+</html>
